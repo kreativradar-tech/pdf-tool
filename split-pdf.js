@@ -41,15 +41,17 @@ async function splitPdf(inputPath) {
 }
 
 async function main() {
-  const inputPath = process.argv[2];
+  const inputPaths = process.argv.slice(2);
 
-  if (!inputPath) {
-    console.error("Usage: node split-pdf.js <input.pdf>");
+  if (inputPaths.length === 0) {
+    console.error("Usage: node split-pdf.js <input1.pdf> [input2.pdf ...]");
     process.exit(1);
   }
 
   try {
-    await splitPdf(inputPath);
+    for (const inputPath of inputPaths) {
+      await splitPdf(inputPath);
+    }
   } catch (error) {
     console.error(`Error: ${error.message}`);
     process.exit(1);
